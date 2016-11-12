@@ -373,5 +373,6 @@ int main(void)
     printf("    OK\n");
 
     printf("\n---------------------------------------------------------------------------\n");
-    printf("TESTS END");
+    printf("TESTS END\n");
+    return 0;
 }
