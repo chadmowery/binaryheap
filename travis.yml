@@ -1,0 +1,10 @@
+language: c
+
+services:
+  - docker
+
+before_script:
+  - docker pull chadmowery/binaryheap
+
+script:
+  - docker run -p 8080:80 -e BRANCH=$TRAVIS_BRANCH -e PULL_REQUEST=$TRAVIS_PULL_REQUEST -e PULL_REQUEST_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH chadmowery/binaryheap
