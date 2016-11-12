@@ -135,4 +135,4 @@ TESTS END
 
 ## Contributing
 
-Contributions are welcome. If you have a feature request, or have found a bug, feel free to open a [new issue](https://github.com/srdja/Collections-C/issues/new).
+Contributions are welcome. If you have a feature request, or have found a bug, feel free to open a [new issue](https://github.com/chadmowery/binaryheap/issues/new).
