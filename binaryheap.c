@@ -18,6 +18,8 @@
  */
 #include "binaryheap.h"
 
+/* Uncomment to disable asserts
+ * #define NDEBUG */
 #include <assert.h>
 
 /* Forware declarations */
@@ -152,8 +154,12 @@ int binary_heap_push(binary_heap_t* heap, void* data)
 {
     assert(heap);
 
-    /* If we ran out of space attempt to grab some more, otherwise fail hard */
-    if (heap->size == heap->capacity)
+    /* Overflow */
+    if (heap->size + 1 == SIZE_MAX)
+        return 0;
+
+    /* If we ran out of space attempt to grab some more */
+    if (heap->size == heap->capacity && heap->capacity << 1 < SIZE_MAX)
     {
         if (!BINARY_HEAP_RESIZE)
             return 0;
