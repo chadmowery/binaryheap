@@ -91,7 +91,8 @@ void binary_heap_destroy_free(binary_heap_t* heap)
 {
     assert(heap);
 
-    for (size_t i = 0; i < heap->size; ++i)
+    size_t i;
+    for (i = 0; i < heap->size; ++i)
         BINARY_HEAP_FREE(heap->data[i]);
 
     binary_heap_destroy(heap);
@@ -135,7 +136,8 @@ void binary_heap_traverse(binary_heap_t* heap, visit_f visit)
     if (!heap->size)
         return;
 
-    for (size_t i = 0; i < heap->size; ++i)
+    size_t i;
+    for (i = 0; i < heap->size; ++i)
         visit(*(heap->data + i));
 }
 
