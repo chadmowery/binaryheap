@@ -154,12 +154,14 @@ int binary_heap_push(binary_heap_t* heap, void* data)
 {
     assert(heap);
 
+    size_t MAX = (size_t) - 1;
+
     /* Overflow */
-    if (heap->size + 1 == SIZE_MAX)
+    if (heap->size + 1 == MAX)
         return 0;
 
     /* If we ran out of space attempt to grab some more */
-    if (heap->size == heap->capacity && heap->capacity << 1 < SIZE_MAX)
+    if (heap->size == heap->capacity && heap->capacity << 1 < MAX)
     {
         if (!BINARY_HEAP_RESIZE)
             return 0;
