@@ -2,8 +2,7 @@ Binary Heap
 =============
 
 > A minimal C89 compatible binary heap implementation.
-
-[![Build Status](https://travis-ci.org/srdja/Collections-C.svg?branch=master)](https://travis-ci.org/srdja/Collections-C) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
+[![Build Status](https://travis-ci.org/chadmowery/binaryheap.svg?branch=master)](https://travis-ci.org/chadmowery/binaryheap) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 
 - [Examples](#examples)
 - [Runtimes](#runtimes)
