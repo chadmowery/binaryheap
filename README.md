@@ -77,9 +77,9 @@ binary_heap_destroy_free(heap);
 ## Runtimes
 Operation | Complexity
 ------------ | -------------
-peek min/max | O(1)
+peek | O(1)
 push | O(log n)
-pop min/max | O(log n)
+pop | O(log n)
 traverse | O(n)
 
 ## Building
