@@ -25,6 +25,7 @@
 /* Forware declarations */
 void bubble_up  (binary_heap_t* heap, size_t index);
 void bubble_down(binary_heap_t* heap, size_t index);
+int  resize     (binary_heap_t* heap);
 
 /**
  * Binary heap object used to store heap state.
@@ -39,10 +40,13 @@ struct binary_heap
     size_t capacity;
 };
 
+size_t HEAP_CAPACITY_MAX = (size_t) - 1;
+
 
 /**
  * Construct a new binary heap object. Binary heaps can used as either
  * min or max heaps depending on the comparitor function you provide.
+ * 
  * @param[out] out  The out pointer to hold the new binary_heap_t object
  * @param[in]  cmp  The comparitor function pointer
  */
@@ -74,6 +78,7 @@ void binary_heap_new(binary_heap_t** out, compare_f cmp)
 /**
  * Destroy a binary heap object. This operation will free internal heap state
  * but will NOT free any heap data (void*).
+ * 
  * @param[in] heap  The binary heap to destroy
  */
 void binary_heap_destroy(binary_heap_t* heap)
@@ -87,6 +92,7 @@ void binary_heap_destroy(binary_heap_t* heap)
 /**
  * Destroy a binary heap object. This operation will free internal heap state
  * AND free all heap data (void*).
+ * 
  * @param[in] heap  The binary heap to destroy
  */
 void binary_heap_destroy_free(binary_heap_t* heap)
@@ -103,6 +109,7 @@ void binary_heap_destroy_free(binary_heap_t* heap)
 /**
  * Get a binary heap size.
  * O(1)
+ * 
  * @param[in] heap  The binary heap
  * @return          The binary heap size
  */
@@ -115,6 +122,7 @@ size_t binary_heap_size(binary_heap_t* heap)
 /**
  * Get a binary heap capacity.
  * O(1)
+ * 
  * @param[in] heap The binary heap 
  * @return         The binary heap capacity
  */
@@ -127,6 +135,7 @@ size_t binary_heap_capacity(binary_heap_t* heap)
 /**
  * Traverse the entire binary heap in array order.
  * O(n)
+ * 
  * @param[in] heap  The binary heap to traverse
  * @param[in] visit The visitor function pointer
  */
@@ -146,6 +155,7 @@ void binary_heap_traverse(binary_heap_t* heap, visit_f visit)
 /**
  * Add a new data element to a binary heap.
  * O(logn)
+ * 
  * @param[in] heap  The binary heap
  * @param[in] data  The data element to add
  * @return          1 if the add is successful, otherwise 0
@@ -154,31 +164,15 @@ int binary_heap_push(binary_heap_t* heap, void* data)
 {
     assert(heap);
 
-    size_t MAX = (size_t) - 1;
-
-    /* Overflow */
-    if (heap->size + 1 == MAX)
+    /* Check for overflow */
+    if (heap->size + 1 == HEAP_CAPACITY_MAX)
         return 0;
 
     /* If we ran out of space attempt to grab some more */
-    if (heap->size == heap->capacity && heap->capacity << 1 < MAX)
+    if (heap->size == heap->capacity)
     {
-        if (!BINARY_HEAP_RESIZE)
+        if (!resize(heap))
             return 0;
-
-        heap->capacity <<= 1;
-
-        void* new_data = BINARY_HEAP_REALLOC(heap->data, heap->capacity * sizeof(void*));
-
-        assert(new_data);
-        if (!new_data) {
-            /* When realloc fails, our entire block of memory is invalidated so 
-             * unfortunately, we must free it along with the entire heap */
-            binary_heap_destroy_free(heap);
-            return 0;
-        }
-
-        heap->data = new_data;
     }
 
     /* Do the add then bubble up */
@@ -194,6 +188,7 @@ int binary_heap_push(binary_heap_t* heap, void* data)
  * based on the user comparitor function. Removing elements from
  * binary heaps reduces their size by 1, but capacity remains unchanged.
  * O(logn)
+ * 
  * @param[in]  heap The binary heap
  * @param[out] out  The out ptr to the removed data element
  */
@@ -218,6 +213,7 @@ void binary_heap_pop(binary_heap_t* heap, void** out)
  * should NOT modify it's data as it may invalidate the state of
  * the heap.
  * O(1)
+ * 
  * @param[in]  heap    The binary heap
  * @param[out] out     The out ptr to the top-most element if exists, otherwise NULL
  */
@@ -231,10 +227,43 @@ void binary_heap_peek(binary_heap_t* heap, void** out)
 /* Internal Helpers */
 
 /**
+ * Attempt to resize the binary heap. This operation fails if heap
+ * resizes are not allowed via BINARY_HEAP_RESIZE 0, or if the new
+ * heap capacity is greater than the size_t limit.
+ * 
+ * @param[in] heap  The binary heap
+ * @return          1 if resize success, otherwise 0
+ */
+int resize(binary_heap_t* heap)
+{
+    size_t new_size = heap->capacity << 1;
+    /* Bail if resizing is not allowed or if the resize overflowed */
+    if (!BINARY_HEAP_RESIZE || (new_size > heap->capacity && new_size < HEAP_CAPACITY_MAX))
+        return 0;
+
+    heap->capacity = new_size;
+
+    void* new_data = BINARY_HEAP_REALLOC(heap->data, heap->capacity * sizeof(void*));
+
+    assert(new_data);
+    if (!new_data) {
+        /* When realloc fails, our entire block of memory is invalidated so 
+         * unfortunately, we must free it along with the entire heap */
+        binary_heap_destroy_free(heap);
+        return 0;
+    }
+
+    heap->data = new_data;
+
+    return 1;
+}
+
+/**
  * Recursively bubbles up data elements in a heap based on the user
  * comparitor function (min/max). The result of this operation is a
  * binary heap with its top-most element being the smallest/largest
  * in the heap.
+ * 
  * @param[in] heap  The binary heap
  * @param[in] index The current heap index
  */
@@ -264,6 +293,7 @@ void bubble_up(binary_heap_t* heap, size_t index)
  * comparitor function (min/max). The result of this operation is a
  * binary heap with its top-most element being the smallest/largest
  * in the heap.
+ * 
  * @param[in] heap  The binary heap
  * @param[in] index The current heap index
  */
