@@ -5,6 +5,7 @@ Binary Heap
 [![Build Status](https://travis-ci.org/chadmowery/binaryheap.svg?branch=master)](https://travis-ci.org/chadmowery/binaryheap) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 
 - [Examples](#examples)
+- [Configuration](#configuration)
 - [Runtimes](#runtimes)
 - [Building](#building)
 - [Dependencies](#dependencies)
@@ -72,6 +73,43 @@ else {
 
 // Destroy heap
 binary_heap_destroy_free(heap);
+```
+
+## Configuration
+
+Additional binary heap configuration is always optional and is done through a few macros defined at the top of `binaryheap.h`.
+
+> NOTE: Binary heaps resize themselves by doubling current capacity and resize by default.
+
+```c
+// File binaryheap.h
+
+// A value of 0 disallows heap resizing
+#define BINARY_HEAP_RESIZE 1
+
+// Change the initial heap capacity
+#define BINARY_HEAP_INITIAL_CAPACITY 20
+```
+
+> You can also provide your own implementations for `malloc`, `free`, and `realloc` and avoid `<stdlib.h>`.
+
+```c
+// binaryheap.h
+
+#ifndef BINARY_HEAP_ALLOC
+#include <stdlib.h>
+#define BINARY_HEAP_ALLOC(x)        malloc(x)
+#define BINARY_HEAP_REALLOC(x, num) realloc(x, num)
+#define BINARY_HEAP_FREE(x)         free(x)
+```
+
+```c
+// yourfile.h
+
+#define BiNARY_HEAP_ALLOC
+#define BINARY_HEAP_ALLOC(x)        custom_alloc(x)
+#define BINARY_HEAP_REALLOC(x, num) custom_realloc(x, num)
+#define BINARY_HEAP_FREE(x)         custom_free(x)
 ```
 
 ## Runtimes
