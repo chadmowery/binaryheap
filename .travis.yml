@@ -10,4 +10,4 @@ addons:
     packages:
       - valgrind
 
-script: make test && valigrind --leak-check=full ./test
+script: make test && valgrind --leak-check=full ./test
