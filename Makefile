@@ -10,4 +10,4 @@ test: binaryheap.o test.o
 	gcc -o test binaryheap.o test.o $(CFLAGS)
 
 clean:
-	rm -rf *.o *~ test test.dSYM
+	rm -rf *.o *~ test test.dySYM tes.gcno test.gcda

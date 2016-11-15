@@ -32,14 +32,6 @@ int min(void* a, void* b)
     return (*(int*)a - *(int*)b);
 }
 
-/* Test visitor */
-void printer(void* elem)
-{
-    assert(elem && "Expected non-NULL element in visitor");
-
-    printf("[%d]\n", *(int*)elem);
-}
-
 /* Test helper */
 void* elem_new(int value)
 {
@@ -269,6 +261,39 @@ void test_binary_heap_peek()
     binary_heap_destroy_free(heap);
 }
 
+/* Test visitor */
+int idx = 0;
+int expected_traverse[10] = { 1, 2, 4, 5, 3, 7, 6, 10, 8, 9 };
+void visit(void* elem)
+{
+    assert(elem && "Expected non-NULL element in visitor");
+    assert(idx < 10);
+
+    assert(*(int*)elem == expected_traverse[idx++]);
+}
+
+void test_binary_heap_traverse()
+{
+    binary_heap_t* heap;
+    binary_heap_new(&heap, &min);
+
+    binary_heap_push(heap, elem_new(10));
+    binary_heap_push(heap, elem_new(4));
+    binary_heap_push(heap, elem_new(7));
+    binary_heap_push(heap, elem_new(9));
+    binary_heap_push(heap, elem_new(8));
+    binary_heap_push(heap, elem_new(6));
+    binary_heap_push(heap, elem_new(2));
+    binary_heap_push(heap, elem_new(3));
+    binary_heap_push(heap, elem_new(5));
+    binary_heap_push(heap, elem_new(1));
+
+    idx = 0;
+    binary_heap_traverse(heap, &visit);
+
+    binary_heap_destroy_free(heap);
+}
+
 void test_binary_heap_destroy()
 {
     binary_heap_t* heap;
@@ -374,6 +399,10 @@ int main(void)
 
     printf("Running test: test_binary_heap_peek()");
     test_binary_heap_peek();
+    printf("    OK\n");
+
+    printf("Running test: test_binary_heap_traverse()");
+    test_binary_heap_traverse();
     printf("    OK\n");
 
     printf("Running test: test_binary_heap_destroy()");
