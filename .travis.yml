@@ -9,5 +9,8 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - valgrind
-
+before_install:
+  - pip install --user cpp-coveralls
 script: make test && valgrind --leak-check=full ./test
+after_success:
+  - coveralls --exclude lib --exclude tests --gcov-options '\-lp'

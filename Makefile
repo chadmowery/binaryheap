@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -I. -Wall -std=c89 #-g
+CFLAGS = -I. -Wall -std=c89 -g -O0 -fprofile-arcs -ftest-coverage
 
 DEPS = binaryheap.h
 
@@ -7,7 +7,7 @@ DEPS = binaryheap.h
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 test: binaryheap.o test.o 
-	gcc -o test binaryheap.o test.o -I.
+	gcc -o test binaryheap.o test.o $(CFLAGS)
 
 clean:
 	rm -rf *.o *~ test test.dSYM
