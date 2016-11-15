@@ -31,9 +31,14 @@ extern "C" {
 
 
 /* Override to change heap resizing. Heaps resize doubles capacity. */
+#ifndef BINARY_HEAP_RESIZE
 #define BINARY_HEAP_RESIZE 1
+#endif
+
 /* Starting heap size */
+#ifndef BINARY_HEAP_INITIAL_CAPACITY
 #define BINARY_HEAP_INITIAL_CAPACITY 20
+#endif
 
 /* Override to avoid malloc */
 #ifndef BiNARY_HEAP_ALLOC

@@ -22,6 +22,8 @@
  * #define NDEBUG */
 #include <assert.h>
 
+#include <stdio.h>
+
 /* Forware declarations */
 void bubble_up  (binary_heap_t* heap, size_t index);
 void bubble_down(binary_heap_t* heap, size_t index);
@@ -238,7 +240,7 @@ int resize(binary_heap_t* heap)
 {
     size_t new_size = heap->capacity << 1;
     /* Bail if resizing is not allowed or if the resize overflowed */
-    if (!BINARY_HEAP_RESIZE || (new_size > heap->capacity && new_size < HEAP_CAPACITY_MAX))
+    if (!BINARY_HEAP_RESIZE || (new_size < heap->capacity && new_size < HEAP_CAPACITY_MAX))
         return 0;
 
     heap->capacity = new_size;

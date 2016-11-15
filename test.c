@@ -58,6 +58,28 @@ void test_binary_heap_new()
     binary_heap_destroy_free(heap);
 }
 
+void test_binary_heap_resize()
+{
+    binary_heap_t* heap;
+    binary_heap_new(&heap, &min);
+    
+    assert(heap && "Failed to construct new binary_heap_t");
+    void* top = NULL;
+    binary_heap_peek(heap, &top);
+    assert(top == NULL && "Expected peek value [NULL]");
+    assert(binary_heap_size(heap) == 0 && "Expected initial heap size of 0");
+
+    assert(binary_heap_capacity(heap) == BINARY_HEAP_INITIAL_CAPACITY && "Expected initial heap capacity of BINARY_HEAP_INITIAL_CAPACITY [20]");
+
+    size_t i;
+    for (i = 0; i < BINARY_HEAP_INITIAL_CAPACITY + 1; ++i)
+        assert(1 == binary_heap_push(heap, elem_new((int)i)) && "Expected successful heap push");
+
+    assert(binary_heap_capacity(heap) == BINARY_HEAP_INITIAL_CAPACITY * 2 && "Expected binary heap to resize to BINARY_HEAP_INITIAL_CAPACITY * 2 [40]");
+
+    binary_heap_destroy_free(heap);
+}
+
 void test_binary_heap_push()
 {
     binary_heap_t* heap;
@@ -387,6 +409,10 @@ int main(void)
 
     printf("Running test: test_binary_heap_new()");
     test_binary_heap_new();
+    printf("    OK\n");
+
+    printf("Running test: test_binary_heap_resize()");
+    test_binary_heap_resize();
     printf("    OK\n");
 
     printf("Running test: test_binary_heap_push()");
