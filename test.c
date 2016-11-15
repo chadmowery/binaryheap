@@ -1,6 +1,6 @@
 /*
  * test.c
- * Copyright (C) 2016-2017 Chad Mowery
+ * Copyleft (C) 2016-2017 Chad Mowery
  *
  * 
  * test.c is free software: you can redistribute it and/or modify
@@ -206,6 +206,7 @@ void test_binary_heap_pop()
 
     binary_heap_pop(heap, &top);
     assert(*(int*)top == 10 && "Expected pop value [10]");
+    free(top);
     assert(binary_heap_size(heap) == 0 && "Expected heap size of [0]");
 
     top = NULL;
@@ -308,6 +309,17 @@ void test_binary_heap_destroy()
     assert(*(int*)e7 == 3 && "Expected element value [3]");
     assert(*(int*)e8 == 5 && "Expected element value [5]");
     assert(*(int*)e9 == 1 && "Expected element value [1]");
+
+    free(e0);
+    free(e1);
+    free(e2);
+    free(e3);
+    free(e4);
+    free(e5);
+    free(e6);
+    free(e7);
+    free(e8);
+    free(e9);
 }
 
 void test_binary_heap_destroy_free()
