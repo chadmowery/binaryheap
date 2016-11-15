@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -I. -Wall -std=c89 #-g
+CFLAGS = -I. -Wall -std=c89
 
 DEPS = binaryheap.h
 
@@ -10,4 +10,4 @@ test: binaryheap.o test.o
 	gcc -o test binaryheap.o test.o -I.
 
 clean:
-	rm -rf *.o *~ test
+	rm -rf *.o test
