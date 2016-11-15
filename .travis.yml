@@ -1,7 +1,13 @@
 language: c
-
 compiler:
   - gcc
   - clang
+sudo: false
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - valgrind
 
-script: make test && ./test
+script: make test && valigrind --leak-check=full ./test
