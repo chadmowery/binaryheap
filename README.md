@@ -1,8 +1,8 @@
 Binary Heap
 =============
 
+[![Build Status](https://travis-ci.org/chadmowery/binaryheap.svg?branch=master)](https://travis-ci.org/chadmowery/binaryheap) [![Coverage Status](https://coveralls.io/repos/github/chadmowery/binaryheap/badge.svg?branch=master)](https://coveralls.io/github/chadmowery/binaryheap?branch=master) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 > A minimal C89 compatible binary heap implementation.
-[![Build Status](https://travis-ci.org/chadmowery/binaryheap.svg?branch=master)](https://travis-ci.org/chadmowery/binaryheap) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 
 - [Examples](#examples)
 - [Configuration](#configuration)
