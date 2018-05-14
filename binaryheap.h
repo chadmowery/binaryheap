@@ -41,7 +41,7 @@ extern "C" {
 #endif
 
 /* Override to avoid malloc */
-#ifndef BiNARY_HEAP_ALLOC
+#ifndef BINARY_HEAP_ALLOC
 #include <stdlib.h>
 #define BINARY_HEAP_ALLOC(x)        malloc(x)
 #define BINARY_HEAP_REALLOC(x, num) realloc(x, num)
@@ -57,19 +57,19 @@ typedef int (*compare_f)(void*, void*);
 typedef void (*visit_f)(void*);
 
 
-void 	binary_heap_new			 (binary_heap_t** out, compare_f cmp);
+void 	binary_heap_new			      (binary_heap_t** out, compare_f cmp);
 
-void 	binary_heap_destroy	 	 (binary_heap_t* heap);
-void 	binary_heap_destroy_free (binary_heap_t* heap);
+void 	binary_heap_destroy	 	    (binary_heap_t* heap);
+void 	binary_heap_destroy_free  (binary_heap_t* heap);
 
-size_t	binary_heap_size 		 (binary_heap_t* heap);
-size_t 	binary_heap_capacity 	 (binary_heap_t* heap);
+size_t	binary_heap_size 		    (binary_heap_t* heap);
+size_t 	binary_heap_capacity 	  (binary_heap_t* heap);
 
-void 	binary_heap_traverse	 (binary_heap_t* heap, visit_f visit);
+void 	binary_heap_traverse	    (binary_heap_t* heap, visit_f visit);
 
-int 	binary_heap_push		 (binary_heap_t* heap, void* data);
-void 	binary_heap_pop			 (binary_heap_t* heap, void** out);
-void 	binary_heap_peek		 (binary_heap_t* heap, void** out);
+int 	binary_heap_push          (binary_heap_t* heap, void* data);
+void 	binary_heap_pop			      (binary_heap_t* heap, void** out);
+void 	binary_heap_peek		      (binary_heap_t* heap, void** out);
 
 #ifdef __cplusplus
 }
